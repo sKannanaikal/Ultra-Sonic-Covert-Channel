@@ -1,6 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Pressable, Alert} from 'react-native';
-import React, { useState } from 'react'
+import { StyleSheet, Text, View, TextInput, Pressable, Alert, Button} from 'react-native';
+import React, { useState } from 'react';
+import { Audio } from 'expo-av';
+import { Navigation } from 'react-native-navigation';
 
 const sandyBrown = '#F89F5B';
 const cerise = '#E53F71';
@@ -8,42 +10,64 @@ const redViolet = '#9c3587';
 const daisy = '#653780';
 const paua = '#3F1651';
 
-const App = () => {
-  const [getData, setData] = useState('')
+const HomeScreen = (props) => {
+
+  function scan(){
+    alert('Starting to Scan');
+    Navigation.push(props.componentId, {
+      component: {
+        name: 'Scan'
+      }
+    });
+  }
+
+  function listen(){
+    alert('Starting Listener')
+    return
+  }
+
   return (
     <View style={styles.container}>
 
-      <Text style={styles.textField}>Ultrasonic Covert Communications Mobile Receiver</Text>
-
-      <TextInput
-        editable
-        multiline
-        numberOfLines={4}
-        maxLength={100}
-        style={styles.textInput}
-        placeholder='Enter Messages to Send'
-        onChangeText= {(data) => setData(data)}
-        defaultValue={getData}
-      ></TextInput>
-
-
-      <Pressable style={styles.button} onPress={ () => {
-        Alert.alert('Proceeding to Send Data');
-      }
-      }>
-        <Text style={styles.buttonText}>Send Data</Text>
+      <Pressable style={styles.button} onPress={scan}>
+        <Text style={styles.buttonText}>{'Scan'}</Text>
       </Pressable>
 
-     
-      <Pressable style={styles.button} onPress={ () => {
-        Alert.alert('Starting Listener');
-      }
-      }>
-        <Text style={styles.buttonText}>Scan Infections</Text>
+      <Pressable style={styles.button} onPress={listen}>
+        <Text style={styles.buttonText}>{'Listen'}</Text>
       </Pressable>
+
     </View>
   );
 }
+
+const ScanningScreen = () => {
+  return (
+    <View style={styles.root}>
+      <Text>Scanning Screen</Text>
+    </View>
+  );
+}
+
+
+Navigation.registerComponent('Home', () => HomeScreen);
+Navigation.registerComponent('Scan', () => ScanningScreen);
+
+Navigation.events().registerAppLaunchedListener(async () => {
+  Navigation.setRoot({
+    root: {
+      stack: {
+        children: [
+          {
+            component: {
+              name: 'Home'
+            }
+          }
+        ]
+      }
+    }
+  });
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -66,7 +90,7 @@ const styles = StyleSheet.create({
     elevation: 3,
     backgroundColor: daisy,
     margin: 30,
-    width:'60%'
+    width:'50%',
   },
 
   textInput: {
@@ -89,4 +113,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default App;
+export default HomeScreen;
