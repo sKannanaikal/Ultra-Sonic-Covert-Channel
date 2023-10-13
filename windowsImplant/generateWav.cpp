@@ -23,38 +23,10 @@ class SineOscillator{
         }
 };
 
-void findBits(){
-    ifstream f(".\\test.txt", ios::binary | ios::in);
-    char c;
-    while (f.get(c))
-    {
-        for (int i = 7; i >= 0; i--){
-            int bit = ((c >> i) & 1);
-           
-            if(bit == 0){
-                //encode lowbit
-                for(int i = 0; i < sampleRate * seconds; i++){
-                    float result = lowOscilator.process();
-                    int sample = static_cast<int> (result * maximumAmplitude);
-                    sampleValues.write( reinterpret_cast<char *> (&sample),  2);
-                }
-            }
-            
-            else if(bit == 1){
-                //encode highbit
-                for(int i = 0; i < sampleRate * seconds; i++){
-                    float result = highOscilator.process();
-                    int sample = static_cast<int> (result * maximumAmplitude);
-                    sampleValues.write( reinterpret_cast<char *> (&sample),  2);
-                }
-            }
-        }
-    }
-}
+
 
 int main(int argc, char *argv[]){
-    findBits();
-    int seconds = 1;
+    float seconds = 0.1;    
     ofstream sampleValues;
     sampleValues.open("waveform.wav", ios::binary);
     
@@ -91,10 +63,31 @@ int main(int argc, char *argv[]){
     sampleValues << "----";
     int ogPosition = sampleValues.tellp();
     
-    for(int i = 0; i < sampleRate * seconds; i++){
+    ifstream f(argv[1], ios::binary | ios::in); // pass in the file here to translate it
+    char c;
+    while (f.get(c))
+    {
+        for (int i = 7; i >= 0; i--){
+            int bit = ((c >> i) & 1);
+           
+            if(bit == 0){
+                //encode lowbit
+                for(int i = 0; i < sampleRate * seconds; i++){
+                    float result = lowOscilator.process();
+                    int sample = static_cast<int> (result * maximumAmplitude);
+                    sampleValues.write( reinterpret_cast<char *> (&sample),  2);
+                }
+            }
+            
+            else if(bit == 1){
+                //encode highbit
+                for(int i = 0; i < sampleRate * seconds; i++){
                     float result = highOscilator.process();
                     int sample = static_cast<int> (result * maximumAmplitude);
                     sampleValues.write( reinterpret_cast<char *> (&sample),  2);
+                }
+            }
+        }
     }
 
     int postPosition = sampleValues.tellp();
