@@ -31,11 +31,11 @@ int main(int argc, char *argv[]){
     ofstream sampleValues;
     sampleValues.open("waveform.wav", ios::binary);
     
-    //SineOscillator highOscilator(19000, 0.5); //high frequency = 1 bit
-    //SineOscillator lowOscilator(18000, 0.5); //low frequency = 0 bit
+    SineOscillator highOscilator(19000, 0.5); //high frequency = 1 bit
+    SineOscillator lowOscilator(18000, 0.5); //low frequency = 0 bit
     
-    SineOscillator highOscilator(700, 0.5); //high frequency = 1 bit Note F5 ~698 hz
-    SineOscillator lowOscilator(400, 0.5); //low frequency = 0 bit Note G4 ~392 hz
+    //SineOscillator highOscilator(700, 0.5); //high frequency = 1 bit Note F5 ~698 hz
+    //SineOscillator lowOscilator(400, 0.5); //low frequency = 0 bit Note G4 ~392 hz
 
     int maximumAmplitude =  pow(2, bitDepth - 1) - 1;
     int fmtSize = 16;

@@ -81,7 +81,9 @@ def decodeNormal(filepath):
         
         else:
             print(roundedFrequency)
-    
+
+        count += 1
+
     print(bits)
     print(count)
 
@@ -112,11 +114,11 @@ def decodeFast(filepath):
 
         roundedFrequency = round(frequency)
 
-        if roundedFrequency == 400:
+        if roundedFrequency == 17986:
             print(f'{count}: 0 {roundedFrequency}')
             bits += '0'
 
-        elif roundedFrequency == 700:
+        elif roundedFrequency == 19000:
             print(f'{count}: 1 {roundedFrequency}')
             bits += '1'
         
