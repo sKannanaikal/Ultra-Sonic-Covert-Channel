@@ -2,7 +2,7 @@
 #include <cmath>
 #include <fstream>
 
-const int sampleRate = 44100;
+const int sampleRate = 4410000;
 const int bitDepth = 16;
 using namespace std;
 
@@ -27,7 +27,7 @@ class SineOscillator{
 };
 
 int main(int argc, char *argv[]){
-    float seconds = 1.0;    
+    float seconds = 0.01;    
     ofstream sampleValues;
     sampleValues.open("waveform.wav", ios::binary);
     

@@ -31,6 +31,16 @@ def uploadComputerFile():
         decodeNormal(filepath=filepath)
         return 'Success'
 
+@app.route("/fast", methods=['POST'])
+def uploadFastFile():
+    if request.method == 'POST':
+        encodedFile = request.files['file']
+        filepath = f'.\\uploads\\{encodedFile.filename}'
+        encodedFile.save(filepath)
+        print('[+] File Upload Complete')
+        decodeFast(filepath=filepath)
+        return 'Success'
+
 def identifyDominantFrequencySingleChannel(filepath, start_time, end_time):
     sr, data = wavfile.read(filepath)
     dataToRead = data[int(start_time * sr / 1000) : int(end_time * sr / 1000) + 1]
@@ -82,6 +92,51 @@ def decodeNormal(filepath):
             byteBuffer.append(int(bits[i:i+8], 2))
             i+= 8
         file.write(byteBuffer) #that last byte is messed up
+
+def decodeFast(filepath):
+    sampFreq, sound = wavfile.read(filepath)
+    sound = sound / 2.0**(16-1)
+    secondsLength = sound.shape[0] / sampFreq
+    time = np.arange(sound.shape[0]) / sound.shape[0] * secondsLength
+    bitcount = int(secondsLength * 100) #floor division doesn't work properly here
+    print(secondsLength)
+    print(bitcount)
+    bits = ''
+    previous = 0
+    count = 0
+    
+    for i in range(1, bitcount + 1):
+        intervalMax = i * 10
+        frequency = identifyDominantFrequencySingleChannel(filepath, previous, intervalMax)
+        previous = intervalMax
+
+        roundedFrequency = round(frequency)
+
+        if roundedFrequency == 400:
+            print(f'{count}: 0 {roundedFrequency}')
+            bits += '0'
+
+        elif roundedFrequency == 700:
+            print(f'{count}: 1 {roundedFrequency}')
+            bits += '1'
+        
+        else:
+            print(roundedFrequency)
+    
+
+        count += 1
+
+    print(bits)
+    print(count)
+
+    with open('decoded', 'bw') as file:
+        i = 0
+        byteBuffer = bytearray()
+        while(i < len(bits)):
+            byteBuffer.append(int(bits[i:i+8], 2))
+            i+= 8
+        file.write(byteBuffer) #that last byte is messed up
+
 
 def decodeUltraSonic(filepath): #currently set to decode at ultra sonic range
     sampFreq, sound = wavfile.read(filepath)
