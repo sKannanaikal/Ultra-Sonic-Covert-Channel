@@ -15,9 +15,24 @@ The implants code can be found in the file frequencyEncoder.cpp.  This was compi
 On top of this all three executables are to be ran from the command line and take a single command line argument of a file path to a file that you would like to encode.  The program will then go through identify and encode the bits and then produce a waveform.wav file in the same directory containing the encoded bits.  This file can either be directly uploaded to the file server for decoding (more on that later), or it can be recorded using a recording device and the corresponding .wav file can be sent to the decoding server.
 
 ### Usage Example
-
 All of these variants can be ran using this example command down below.  (This uses the fast.exe variant but feel free to subsitute whatever variant you would like)
 ```
 .\fast.exe [filepath]
 ```
 
+## Fileserver
+The file server is located in the file app.py.  This is a python flask application and can be ran using the python executable. Once started and you visit the server homepage there will be three options to upload files to.  These account for and decode the three executable variations that was discussed in the implants section
+
+```
+1. ultrasonic decoding - is for us.exe
+2. normal decoding - is for hear.exe
+3. fast decoding - is for fast.exe
+```
+
+Once the file is uploaded to the server it will be found in the uploads directory and it will begin to analyze and decode the .wav file.  Eventually after the decoding routine is completed a decoded file will be created in the fileServer directory containing the decoded file.
+
+### Usage example
+This is how to start the flask server
+```
+python3 app.py
+```
