@@ -37,9 +37,9 @@ This is how to start the flask server
 python3 app.py
 ```
 
-# Paper
+## Paper
 
 If you would like to learn more please visit this link [fill with link] to read our full paper detailing more of the underlying capabilities of the channel and our research.
 
-# Reccomendations and Thoughts 
+## Reccomendations and Thoughts 
 Any improvements or reccomendations are appreciated. 
