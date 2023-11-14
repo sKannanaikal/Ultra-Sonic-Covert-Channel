@@ -114,7 +114,7 @@ def decodeFast(filepath):
 
         roundedFrequency = round(frequency)
 
-        if roundedFrequency == 17986:
+        if roundedFrequency == 18000:
             print(f'{count}: 0 {roundedFrequency}')
             bits += '0'
 
