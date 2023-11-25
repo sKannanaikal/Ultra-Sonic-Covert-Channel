@@ -21,7 +21,7 @@ All of these variants can be ran using this example command down below.  (This u
 ```
 
 ## Fileserver
-The file server is located in the file app.py.  This is a python flask application and can be ran using the python executable. Once started and you visit the server homepage there will be three options to upload files to.  These account for and decode the three executable variations that was discussed in the implants section
+The file server is located in the file app.py.  This is a python flask application and can be ran using the python executable. Once started and you visit the server homepage there will be three options to upload files to.  These account for and decode the three executable variations that was discussed in the implants section.  The file server was both tested locally on the same system as the implant as well as another computer seperate from the implant machine and both work fine in recreating the decoded file.
 
 ```
 1. ultrasonic decoding - is for us.exe
