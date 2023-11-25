@@ -3,6 +3,9 @@
 ## Overview
 There are primarily two components to this ultra sonic covert communications channel.  The implant that will be installed and ran on the "infected" machine.  The infected machine is also considered to be the sender in the current state of the program.  The other component is the fileServer which is where encoded audio files and recordings can be uploaded for decoding and reconstruction of files.
 
+## Testing Environment
+This was tested in two environments.  The first environment was on a single windows computer running windows 11 and with python installed.  In this environment one folder on the system had the implant executable and in another folder the file server was stored.  THen  the implant executable was used to encode and generate a wav file containing the encoded bits and from there it was both recorded on an iphone and directly uploaded to the file server once the python application was started.  The other testing environment was fairly similar just that the file server was instead ran on a seperate computer to verify that it could transmit data to other systems for successful exfiltration of files.
+
 ## Implant
 The implants code can be found in the file frequencyEncoder.cpp.  This was compiled using the g++ compiler on a Windows 11 Dell XPS 15 9510 laptop.  There are three compiled versions that showcase different bit rates, sample rates, and encode at different frequencies.  
 
